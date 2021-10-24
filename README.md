@@ -1,4 +1,4 @@
-# Introduce
+# Introduction
 
 The main purpose of this project is to create a Screen Recorder.
 
