@@ -1,0 +1,20 @@
+{
+  "name": "screen-recorder",
+  "version": "1.0.0",
+  "author": "Nguyen Van Truong",
+  "license": "MIT",
+  "scripts": {
+    "dev": "live-server . --no-css-inject",
+    "script": "tsc --project tsconfig.build.json",
+    "script:watch": "tsc --project tsconfig.build.json --watch",
+    "css": "tailwindcss -i ./src/tailwind.css -o ./public/style.css",
+    "css:watch": "tailwindcss -i ./src/tailwind.css -o ./public/style.css --watch",
+    "build": "run-s script css"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.1",
+    "npm-run-all": "^4.1.5",
+    "tailwindcss": "^2.2.17",
+    "typescript": "^4.4.4"
+  }
+}
