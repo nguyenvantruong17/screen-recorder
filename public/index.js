@@ -46,9 +46,6 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 if (!window)
     throw new Error('No window available');
 var stream = null, audio = null, mixedStream = null, chunks = [], recorder = null, startButton = null, stopButton = null, downloadButton = null, recordedVideo = null, recordedVideoWrap = null, recordedAtLeastOne = false;
-/**
- * @description Set up video feedback
- */
 function setupVideoFeedback() {
     if (!stream)
         throw new Error('No stream available');
@@ -56,9 +53,6 @@ function setupVideoFeedback() {
     videoElm.srcObject = stream;
     videoElm.play();
 }
-/**
- * @description Set up stream and audio
- */
 function setupStream() {
     return __awaiter(this, void 0, void 0, function () {
         var _a;
@@ -66,10 +60,10 @@ function setupStream() {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 3, , 4]);
-                    return [4 /*yield*/, navigator.mediaDevices.getDisplayMedia({ video: true })];
+                    return [4, navigator.mediaDevices.getDisplayMedia({ video: true })];
                 case 1:
                     stream = _b.sent();
-                    return [4 /*yield*/, navigator.mediaDevices.getUserMedia({ audio: {
+                    return [4, navigator.mediaDevices.getUserMedia({ audio: {
                                 echoCancellation: true,
                                 noiseSuppression: true,
                                 sampleRate: 44100
@@ -77,24 +71,18 @@ function setupStream() {
                 case 2:
                     audio = _b.sent();
                     setupVideoFeedback();
-                    return [3 /*break*/, 4];
+                    return [3, 4];
                 case 3:
                     _a = _b.sent();
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
+                    return [3, 4];
+                case 4: return [2];
             }
         });
     });
 }
-/**
- * @description Get data of `dataavailable` event while recording
- */
 function handleDataAvailable(e) {
     chunks.push(e.data);
 }
-/**
- * @description Handle stop event
- */
 function handleStop() {
     var blob = new Blob(chunks, {
         type: "video/mp4"
@@ -114,9 +102,6 @@ function handleStop() {
         recordedVideoWrap.scrollIntoView({ behavior: "smooth", block: "start" });
     };
 }
-/**
- * @description Start recording
- */
 function startRecording() {
     return __awaiter(this, void 0, void 0, function () {
         var mime;
@@ -128,7 +113,7 @@ function startRecording() {
                         recordedVideo.src = "";
                         recordedVideoWrap.classList.add('hidden');
                     }
-                    return [4 /*yield*/, setupStream()];
+                    return [4, setupStream()];
                 case 1:
                     _a.sent();
                     if (!stream)
@@ -138,8 +123,6 @@ function startRecording() {
                     mime = MediaRecorder.isTypeSupported("video/webm; codecs=vp9")
                         ? "video/webm; codecs=vp9"
                         : "video/webm";
-                    // You don't need to mix streams when you don't have audio.
-                    // You can use the `new MediaRecorder` directly instead.
                     mixedStream = new MediaStream(__spreadArray(__spreadArray([], stream.getTracks(), true), audio.getTracks(), true));
                     recorder = new MediaRecorder(mixedStream, { mimeType: mime });
                     recorder.ondataavailable = handleDataAvailable;
@@ -147,14 +130,11 @@ function startRecording() {
                     recorder.start(200);
                     startButton.disabled = true;
                     stopButton.disabled = false;
-                    return [2 /*return*/];
+                    return [2];
             }
         });
     });
 }
-/**
- * @description Stop recording
- */
 function stopRecording() {
     if (!recorder)
         throw new Error('No recorder available');
